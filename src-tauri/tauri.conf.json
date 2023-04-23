@@ -59,7 +59,8 @@
         "height": 600,
         "resizable": true,
         "title": "Parol Symbols Viewer",
-        "width": 800
+        "width": 800,
+        "alwaysOnTop": true
       }
     ]
   }
