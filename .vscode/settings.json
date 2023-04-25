@@ -3,6 +3,8 @@
         "fullscreen",
         "icns",
         "mantine",
+        "modulz",
+        "Radiobutton",
         "tauri"
     ]
 }

@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.github.jsinger67",
+      "identifier": "com.github.jsinger67.parol_symbols",
       "longDescription": "",
       "macOS": {
         "entitlements": null,

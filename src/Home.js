@@ -1,7 +1,7 @@
 import { Text } from "@mantine/core";
 
-export default function Settings() {
+export default function Details() {
     return (
-        <Text>Home view</Text>
+        <Text>Details view</Text>
     );
 }
