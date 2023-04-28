@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-import { AppShell, Header, Text, Tabs, Burger, Navbar, ActionIcon, Group } from '@mantine/core';
+import { Button, FileButton, Text, Tabs, Group, Flex } from '@mantine/core';
 import { MantineProvider } from '@mantine/core';
 import { SunIcon, MoonIcon, RadiobuttonIcon, ValueIcon } from '@modulz/radix-icons';
 import { useState } from 'react';
@@ -19,18 +19,22 @@ function App() {
     path: '/',
     name: 'Symbols',
     exact: true,
-    component: Symbols,
+    component: <Symbols />,
     icon: <RadiobuttonIcon size={30} />
   }, {
     path: '/scopes',
     name: 'Scopes',
     exact: false,
-    component: Scopes,
+    component: <Scopes />,
     icon: <ValueIcon size={30} />
   }];
 
-  const [opened, setOpened] = useState(false);
-  console.log(opened);
+  // const [opened, setOpened] = useState(false);
+
+  // -------------------------------------------
+  // State Color Scheme
+  // -------------------------------------------
+
   const defaultColorScheme = 'dark';
   const [colorScheme, setColoScheme] = useState(defaultColorScheme);
 
@@ -38,6 +42,12 @@ function App() {
     const newValue = value || (colorScheme === 'dark' ? 'light' : 'dark');
     setColoScheme(newValue);
   }
+
+  // -------------------------------------------
+  // State Grammar File
+  // -------------------------------------------
+
+  const [file, setFile] = useState(null);
 
   const TabPanels = () => {
     return views.map((view) =>
@@ -89,36 +99,63 @@ function App() {
   const { classes } = useStyles();
 
   return (
-    <MantineProvider theme={{ colorScheme, fontFamily: 'Arial' }} withGlobalStyles>
-      <MemoryRouter>
-        <AppShell padding="md" navbarOffsetBreakpoint="sm"
-          navbar={
-            <Navbar width={{ sm: 200 }} padding="xs" hidden={!opened} hiddenBreakpoint="sm">
-              <TabArea />
-            </Navbar>
-          }
-          header={
-            <Header data-tauri-drag-region height={70} p='md' className={`${classes.header} `} display='flex'>
-              <Group styles={{ display: 'block' }}>
-                <Burger opened={opened} onClick={() => setOpened(o => !o)}
-                  size='sm' mr='xl' color={useMantineTheme().colors.gray[6]} />
-              </Group>
+    // <MantineProvider theme={{ colorScheme, fontFamily: 'Arial' }} withGlobalStyles>
+    //   <MemoryRouter>
+    //     <AppShell padding="md" navbarOffsetBreakpoint="sm"
+    //       navbar={
+    //         <Navbar width={{ sm: 200 }} padding="xs" hidden={!opened} hiddenBreakpoint="sm">
+    //           <TabArea />
+    //         </Navbar>
+    //       }
+    //       header={
+    //         <Header data-tauri-drag-region height={70} p='md' className={`${classes.header} `} display='flex'>
+    //           <Group styles={{ display: 'block' }}>
+    //             <Burger opened={opened} onClick={() => setOpened(o => !o)}
+    //               size='sm' mr='xl' color={useMantineTheme().colors.gray[6]} />
+    //           </Group>
+    //           <Text>Parol Symbols Viewer</Text>
+    //           <Group className={classes.headerRightItems}>
+    //             <ActionIcon id='toggle-theme' variant='default' onClick={() => toggleColorScheme()} size={30}>
+    //               {colorScheme === 'dark' ? <SunIcon /> : <MoonIcon />}
+    //             </ActionIcon>
+    //           </Group>
+    //         </Header>
+    //       }
+    //       styles={(theme) => ({
+    //         main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
+    //       })}
+    //     >
+    //       <Details />
+    //     </AppShell>
+    //   </MemoryRouter>
+    // </MantineProvider>
+    <div id='wrapper'>
+      <MantineProvider theme={{ colorScheme, fontFamily: 'Arial' }} withGlobalStyles>
+          <div id='header' className='boxed'>
+            <div className='file_button'>
+              <FileButton onChange={setFile} accept=".par">
+                  {(props) => <Button {...props}>Choose grammar</Button>}
+              </FileButton>
+            </div>
+            <div id='title'>
               <Text>Parol Symbols Viewer</Text>
-              <Group className={classes.headerRightItems}>
-                <ActionIcon id='toggle-theme' variant='default' onClick={() => toggleColorScheme()} size={30}>
-                  {colorScheme === 'dark' ? <SunIcon /> : <MoonIcon />}
-                </ActionIcon>
-              </Group>
-            </Header>
-          }
-          styles={(theme) => ({
-            main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
-          })}
-        >
-          <Details />
-        </AppShell>
-      </MemoryRouter>
-    </MantineProvider>
+            </div>
+            {file && (
+              <div id='chosen_file'>
+                <Text>{file.name}</Text>
+              </div>
+            )}
+          </div>
+          <div id='tabs' className='boxed'>
+              <TabArea />
+          </div>
+          <main className='boxed'>
+              <p>Main</p>
+              <p>Deserunt excepteur est voluptate magna id ut do aliquip eu. Nisi ex quis duis labore enim esse. Deserunt eiusmod nulla non esse labore aute eu. Irure velit non occaecat ut nisi magna minim cupidatat cupidatat. Laboris ullamco dolore veniam aute.</p>
+          </main>
+          <footer className='boxed'>(c) 2023 - Jörg Singer</footer>
+       </MantineProvider>
+    </div>
   );
 }
 
