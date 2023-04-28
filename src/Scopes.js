@@ -1,4 +1,5 @@
 import { Text } from "@mantine/core";
+import ScopeListItem from "./ScopeListItem";
 
 export default function Scopes(props) {
     const { data } = props;
@@ -6,7 +7,7 @@ export default function Scopes(props) {
         return (<>
             {
                 data.scopes.map((scope) =>
-                    <Text>Id: {scope.my_id}</Text>
+                    <ScopeListItem scope={scope}/>
                 )
             }
             </>);
