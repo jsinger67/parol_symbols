@@ -64,7 +64,7 @@ function App() {
 
   const TabSelectors = () => {
     return (
-      <Tabs.List position='right'>
+      <Tabs.List position='left'>
         {
           views.map((view, index) =>
             <Tabs.Tab value={view.name} icon={view.icon}>{view.name}</Tabs.Tab>)
@@ -74,7 +74,7 @@ function App() {
   };
 
   const TabArea = () => {
-    return (<Tabs defaultValue={views[0].name} inverted>
+    return (<Tabs defaultValue={views[0].name}>
       <TabSelectors />
       <TabPanels />
     </Tabs>);

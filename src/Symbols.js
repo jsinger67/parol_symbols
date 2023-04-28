@@ -1,4 +1,5 @@
 import { Text } from "@mantine/core";
+import SymbolListItem from "./SymbolListItem";
 
 export default function Symbols(props) {
     const { data } = props;
@@ -6,7 +7,7 @@ export default function Symbols(props) {
         return (<>
             {
                 data.symbols.map((symbol) =>
-                    <Text>Id: {symbol.my_id}, Name: {symbol.name_id[0]}, {symbol.name_id[1]}</Text>
+                    <SymbolListItem symbol={symbol} data={data}/>
                 )
             }
             </>);
