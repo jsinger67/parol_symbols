@@ -1,53 +1,61 @@
 // import logo from './logo.svg';
-import { Button, FileButton, Text, Tabs, Group, Flex } from '@mantine/core';
+import { Button, FileButton, Text, Tabs } from '@mantine/core';
 import { MantineProvider } from '@mantine/core';
-import { SunIcon, MoonIcon, RadiobuttonIcon, ValueIcon } from '@modulz/radix-icons';
+import { RadiobuttonIcon, ValueIcon } from '@modulz/radix-icons';
 import { useState } from 'react';
-import { createStyles, useMantineTheme } from '@mantine/core';
-import { MemoryRouter } from 'react-router-dom';
 
-// import { invoke } from '@tauri-apps/api';
+import { invoke } from '@tauri-apps/api';
 
 import Symbols from './Symbols';
 import Scopes from './Scopes';
-import Details from './Home';
+import Details from './Details';
 
 import './App.css';
 
 function App() {
-  const views = [{
-    path: '/',
-    name: 'Symbols',
-    exact: true,
-    component: <Symbols />,
-    icon: <RadiobuttonIcon size={30} />
-  }, {
-    path: '/scopes',
-    name: 'Scopes',
-    exact: false,
-    component: <Scopes />,
-    icon: <ValueIcon size={30} />
-  }];
-
-  // const [opened, setOpened] = useState(false);
+  const colorScheme = 'dark';
 
   // -------------------------------------------
-  // State Color Scheme
+  // State Symbol Table Data
   // -------------------------------------------
 
-  const defaultColorScheme = 'dark';
-  const [colorScheme, setColoScheme] = useState(defaultColorScheme);
-
-  const toggleColorScheme = value => {
-    const newValue = value || (colorScheme === 'dark' ? 'light' : 'dark');
-    setColoScheme(newValue);
-  }
+  const [data, setData] = useState(null);
 
   // -------------------------------------------
   // State Grammar File
   // -------------------------------------------
 
   const [file, setFile] = useState(null);
+
+  const handleNewFile = (file) => {
+    console.log(`File: ${file.name}`);
+    file.text().then((content) => {
+      console.log(`Content: ${content}`);
+      setFile(file);
+      invoke('process_grammar', { file: file.name, content: content })
+        .then((result) => {
+          const data = JSON.parse(result);
+          setData(data);
+          console.log(`Result is ${result}`)
+        }
+        )
+        .catch((e) => console.error(e))
+    });
+  }
+
+  const views = [{
+    path: '/',
+    name: 'Symbols',
+    exact: true,
+    component: <Symbols data={data} />,
+    icon: <RadiobuttonIcon size={30} />
+  }, {
+    path: '/scopes',
+    name: 'Scopes',
+    exact: false,
+    component: <Scopes data={data} />,
+    icon: <ValueIcon size={30} />
+  }];
 
   const TabPanels = () => {
     return views.map((view) =>
@@ -67,94 +75,45 @@ function App() {
 
   const TabArea = () => {
     return (<Tabs defaultValue={views[0].name} inverted>
-      <TabPanels />
       <TabSelectors />
+      <TabPanels />
     </Tabs>);
   };
 
-  const useStyles = createStyles((theme) => ({
-    navLink: {
-      display: 'flex',
-      with: '100%',
-      padding: theme.spacing.xs,
-      borderRadius: theme.radius.md,
-      color: colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-      textDecoration: 'none',
-
-      ':hover': {
-        backgroundColor: colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
-      }
-    },
-    navLinkActive: {
-      backgroundColor: colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[1],
-    },
-    headerRightItems: {
-      marginLeft: 'auto',
-    },
-    mediaQuery: {
-      display: 'none'
-    },
-  }));
-
-  const { classes } = useStyles();
+  const HeaderContent = () => {
+    return (
+      <>
+        <div className='file_button'>
+          <FileButton onChange={handleNewFile} accept=".par">
+            {(props) => <Button {...props}>Choose grammar</Button>}
+          </FileButton>
+        </div>
+        <div id='title'>
+          <Text>Parol Symbols Viewer</Text>
+        </div>
+        {file && (
+          <div id='chosen_file'>
+            <Text>{file.name}</Text>
+          </div>
+        )}
+      </>
+    );
+  }
 
   return (
-    // <MantineProvider theme={{ colorScheme, fontFamily: 'Arial' }} withGlobalStyles>
-    //   <MemoryRouter>
-    //     <AppShell padding="md" navbarOffsetBreakpoint="sm"
-    //       navbar={
-    //         <Navbar width={{ sm: 200 }} padding="xs" hidden={!opened} hiddenBreakpoint="sm">
-    //           <TabArea />
-    //         </Navbar>
-    //       }
-    //       header={
-    //         <Header data-tauri-drag-region height={70} p='md' className={`${classes.header} `} display='flex'>
-    //           <Group styles={{ display: 'block' }}>
-    //             <Burger opened={opened} onClick={() => setOpened(o => !o)}
-    //               size='sm' mr='xl' color={useMantineTheme().colors.gray[6]} />
-    //           </Group>
-    //           <Text>Parol Symbols Viewer</Text>
-    //           <Group className={classes.headerRightItems}>
-    //             <ActionIcon id='toggle-theme' variant='default' onClick={() => toggleColorScheme()} size={30}>
-    //               {colorScheme === 'dark' ? <SunIcon /> : <MoonIcon />}
-    //             </ActionIcon>
-    //           </Group>
-    //         </Header>
-    //       }
-    //       styles={(theme) => ({
-    //         main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
-    //       })}
-    //     >
-    //       <Details />
-    //     </AppShell>
-    //   </MemoryRouter>
-    // </MantineProvider>
     <div id='wrapper'>
       <MantineProvider theme={{ colorScheme, fontFamily: 'Arial' }} withGlobalStyles>
-          <div id='header' className='boxed'>
-            <div className='file_button'>
-              <FileButton onChange={setFile} accept=".par">
-                  {(props) => <Button {...props}>Choose grammar</Button>}
-              </FileButton>
-            </div>
-            <div id='title'>
-              <Text>Parol Symbols Viewer</Text>
-            </div>
-            {file && (
-              <div id='chosen_file'>
-                <Text>{file.name}</Text>
-              </div>
-            )}
-          </div>
-          <div id='tabs' className='boxed'>
-              <TabArea />
-          </div>
-          <main className='boxed'>
-              <p>Main</p>
-              <p>Deserunt excepteur est voluptate magna id ut do aliquip eu. Nisi ex quis duis labore enim esse. Deserunt eiusmod nulla non esse labore aute eu. Irure velit non occaecat ut nisi magna minim cupidatat cupidatat. Laboris ullamco dolore veniam aute.</p>
-          </main>
-          <footer className='boxed'>(c) 2023 - Jörg Singer</footer>
-       </MantineProvider>
+        <div id='header' className='boxed'>
+          <HeaderContent />
+        </div>
+        <div id='tabs' className='boxed'>
+          <TabArea />
+        </div>
+        <main className='boxed'>
+          <Details />
+        </main>
+        <footer className='boxed'>(c) 2023 - Jörg Singer</footer>
+      </MantineProvider>
     </div>
   );
 }

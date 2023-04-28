@@ -61,11 +61,13 @@ div#tabs {
   float: left;
   width: 33%;
   padding: 10px;
+  text-align: left;
 }
 
 main {
   margin: 0px;
   margin-left: 33%;
+  padding: 10px;
 }
 
 footer {
