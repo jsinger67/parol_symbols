@@ -3,12 +3,12 @@ use std::path::PathBuf;
 use parol::{left_factor, obtain_grammar_config_from_string, GrammarTypeInfo};
 
 #[tauri::command]
-async fn process_grammar(file: String, content: String) -> Result<serde_json::Value, String> {
+async fn process_grammar(file: String, content: String) -> Result<String, String> {
     let sym_tab_string = get_symbol_table(file, content).await?;
     Ok(sym_tab_string)
 }
 
-async fn get_symbol_table(file_name: String, content: String) -> Result<serde_json::Value, String> {
+async fn get_symbol_table(file_name: String, content: String) -> Result<String, String> {
     let mut grammar_config =
         obtain_grammar_config_from_string(&content, false).map_err(|e| e.to_string())?;
     let grammar_name = PathBuf::from(file_name)
@@ -28,7 +28,7 @@ async fn get_symbol_table(file_name: String, content: String) -> Result<serde_js
         .build(&grammar_config)
         .map_err(|e| e.to_string())?;
     let json = serde_json::to_string(type_info.symbol_table()).map_err(|e| e.to_string())?;
-    Ok(serde_json::to_value(json).map_err(|e| e.to_string())?)
+    Ok(json)
 }
 
 fn main() {

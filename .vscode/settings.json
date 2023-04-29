@@ -6,6 +6,7 @@
         "mantine",
         "modulz",
         "Radiobutton",
-        "tauri"
+        "tauri",
+        "TTFB"
     ]
 }
