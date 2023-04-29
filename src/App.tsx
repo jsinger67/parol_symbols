@@ -11,7 +11,7 @@ import Scopes from "./Scopes";
 import Details from "./Details";
 
 import "./App.css";
-import { EmptySymbolTable, Scope, Symbol, SymbolTable } from "./SymbolTable";
+import { EmptySymbolTable, SymbolTable } from "./SymbolTable";
 import SymbolDetails from "./SymbolDetails";
 import ScopeDetails from "./ScopeDetails";
 
@@ -49,6 +49,7 @@ function App() {
   // -------------------------------------------
   // Context Active Element
   // -------------------------------------------
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [active_element, setActiveElement] = useState<
     typeof SymbolDetails | typeof ScopeDetails | null
   >(null);
