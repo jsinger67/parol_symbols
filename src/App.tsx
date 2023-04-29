@@ -2,7 +2,7 @@
 import { Button, FileButton, Text, Tabs } from "@mantine/core";
 import { MantineProvider } from "@mantine/core";
 import { RadiobuttonIcon, ValueIcon } from "@modulz/radix-icons";
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 
 import { invoke } from "@tauri-apps/api";
 
@@ -11,7 +11,9 @@ import Scopes from "./Scopes";
 import Details from "./Details";
 
 import "./App.css";
-import { EmptySymbolTable, SymbolTable } from "./SymbolTable";
+import { EmptySymbolTable, Scope, Symbol, SymbolTable } from "./SymbolTable";
+import SymbolDetails from "./SymbolDetails";
+import ScopeDetails from "./ScopeDetails";
 
 function App() {
   const colorScheme = "dark";
@@ -20,7 +22,8 @@ function App() {
   // State Symbol Table Data
   // -------------------------------------------
 
-  const [symbol_table, setSymbolTable] = useState<SymbolTable>(EmptySymbolTable);
+  const [symbol_table, setSymbolTable] =
+    useState<SymbolTable>(EmptySymbolTable);
 
   // -------------------------------------------
   // State Grammar File
@@ -42,6 +45,16 @@ function App() {
         .catch((e) => console.error(e));
     });
   };
+
+  // -------------------------------------------
+  // Context Active Element
+  // -------------------------------------------
+  const [active_element, setActiveElement] = useState<
+    typeof SymbolDetails | typeof ScopeDetails | null
+  >(null);
+  const ActiveElementContext = createContext<
+    typeof SymbolDetails | typeof ScopeDetails | null
+  >(active_element);
 
   const views = [
     {
@@ -114,23 +127,25 @@ function App() {
   };
 
   return (
-    <div id="wrapper">
-      <MantineProvider
-        theme={{ colorScheme, fontFamily: "Arial" }}
-        withGlobalStyles
-      >
-        <div id="header" className="boxed">
-          <HeaderContent />
-        </div>
-        <div id="tabs" className="boxed">
-          <TabArea />
-        </div>
-        <main className="boxed">
-          <Details />
-        </main>
-        <footer className="boxed">(c) 2023 - Jörg Singer</footer>
-      </MantineProvider>
-    </div>
+    <ActiveElementContext.Provider value={null}>
+      <div id="wrapper">
+        <MantineProvider
+          theme={{ colorScheme, fontFamily: "Arial" }}
+          withGlobalStyles
+        >
+          <div id="header" className="boxed">
+            <HeaderContent />
+          </div>
+          <div id="tabs" className="boxed">
+            <TabArea />
+          </div>
+          <main className="boxed">
+            <Details element={active_element}/>
+          </main>
+          <footer className="boxed">(c) 2023 - Jörg Singer</footer>
+        </MantineProvider>
+      </div>
+    </ActiveElementContext.Provider>
   );
 }
 
