@@ -12,7 +12,7 @@ const SymbolListItem = (props: SymbolListItemParams | null) => {
     const enveloping_scope = symbol_table.scopes.find(
       (scope) => scope.my_id === symbol.name_id[0]
     )!;
-    const name = enveloping_scope.names[symbol.name_id[1]] || "<Global Scope>";
+    const name = enveloping_scope.names[symbol.name_id[1]] || "<Unnamed>";
     return (
       <div>
         <Button className="list_item">

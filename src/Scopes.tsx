@@ -8,7 +8,7 @@ export default function Scopes(props: SymbolTableParams) {
         return (<>
             {
                 symbol_table.scopes.map((scope) =>
-                    <ScopeListItem scope={scope}/>
+                    <ScopeListItem key={scope.my_id} scope={scope}/>
                 )
             }
             </>);

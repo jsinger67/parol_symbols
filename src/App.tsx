@@ -11,7 +11,7 @@ import Scopes from "./Scopes";
 import Details from "./Details";
 
 import "./App.css";
-import { EmptySymbolTable, SymbolTable, SymbolTableParams } from "./SymbolTable";
+import { EmptySymbolTable, SymbolTable } from "./SymbolTable";
 
 function App() {
   const colorScheme = "dark";
@@ -76,7 +76,7 @@ function App() {
     return (
       <Tabs.List position="left">
         {views.map((view, index) => (
-          <Tabs.Tab value={view.name} icon={view.icon}>
+          <Tabs.Tab key={view.name} value={view.name} icon={view.icon}>
             {view.name}
           </Tabs.Tab>
         ))}

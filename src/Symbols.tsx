@@ -8,7 +8,7 @@ export default function Symbols(props: SymbolTableParams) {
         return (<>
             {
                 symbol_table.symbols.map((symbol) =>
-                    <SymbolListItem symbol={symbol} symbol_table={symbol_table}/>
+                    <SymbolListItem key={symbol.my_id} symbol={symbol} symbol_table={symbol_table}/>
                 )
             }
             </>);

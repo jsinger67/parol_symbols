@@ -7,7 +7,10 @@ export interface ScopeListItemParams {
 
 const ScopeListItem = (props: ScopeListItemParams) => {
     const { scope } = props;
-    const parent = scope.parent || "<no parent>"
+    let parent: number | null | string = scope.parent;
+    if (parent === null) {
+        parent = "<No parent>";
+    }
     return <div><Button className="list_item">{scope.my_id} parent: {parent}</Button></div>;
 }
 
