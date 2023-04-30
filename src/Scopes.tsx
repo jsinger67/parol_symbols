@@ -4,7 +4,7 @@ import { SymbolTableParams } from "./SymbolTable";
 
 export default function Scopes(props: SymbolTableParams) {
     if (props.symbolTable.symbols.length > 0) {
-        const { symbolTable, setActiveElement } = props;
+        const { symbolTable, setActiveElement, assert } = props;
         return (<>
             {
                 symbolTable.scopes.map((scope) =>
@@ -12,7 +12,8 @@ export default function Scopes(props: SymbolTableParams) {
                         key={scope.my_id}
                         scope={scope}
                         symbolTable={symbolTable}
-                        setActiveElement={setActiveElement}/>
+                        setActiveElement={setActiveElement}
+                        assert={assert}/>
                 )
             }
             </>);

@@ -18,6 +18,7 @@ export interface SymbolTable {
 export interface SymbolTableParams {
     symbolTable: SymbolTable,
     setActiveElement: React.Dispatch<React.SetStateAction<JSX.Element>>,
+    assert: React.Dispatch<React.SetStateAction<[boolean, string]>>
 }
 
 export const EmptySymbolTable: SymbolTable = {

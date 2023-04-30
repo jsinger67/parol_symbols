@@ -1,5 +1,5 @@
 // import logo from './logo.svg';
-import { Button, FileButton, Text, Tabs } from "@mantine/core";
+import { Button, FileButton, Text, Tabs, TabsValue } from "@mantine/core";
 import { MantineProvider } from "@mantine/core";
 import { RadiobuttonIcon, ValueIcon } from "@modulz/radix-icons";
 import React, { useState } from "react";
@@ -12,22 +12,17 @@ import Details from "./Details";
 
 import "./App.css";
 import { EmptySymbolTable, SymbolTable } from "./SymbolTable";
-// import SymbolDetails from "./SymbolDetails";
-// import ScopeDetails from "./ScopeDetails";
-
-// const setActiveElement = (state, action) => {
-//   switch (action.type) {
-//     case 'SYMBOL':
-//       return { active_element: <SymbolDetails props = {{  symbol: action.symbol, symbolTable: action.symbolTable }}/> }
-//     case 'SCOPE':
-//       return { active_element: <ScopeDetails props = {{  scope: action.scope, symbolTable: action.symbolTable }}/> }
-//     default:
-//       throw new Error('Unknown action')
-//   }
-// }
+import { Assert } from "./Assert";
 
 function App() {
   const colorScheme = "dark";
+
+  // -------------------------------------------
+  // State Alert
+  // -------------------------------------------
+
+  const [[cond, msg], assert] = useState<[boolean, string]>([true, ""]);
+
 
   // -------------------------------------------
   // State Symbol Table Data
@@ -60,7 +55,6 @@ function App() {
   // -------------------------------------------
   // Context Active Element
   // -------------------------------------------
-  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [active_element, setActiveElement] =
     useState<JSX.Element>(<Text><p>Nothing selected</p></Text>);
 
@@ -69,17 +63,30 @@ function App() {
       path: "/",
       name: "Symbols",
       exact: true,
-      component: <Symbols symbolTable={symbolTable} setActiveElement={setActiveElement}/>,
+      component: <Symbols
+        symbolTable={symbolTable}
+        setActiveElement={setActiveElement}
+        assert={assert}/>,
       icon: <RadiobuttonIcon />,
     },
     {
       path: "/scopes",
       name: "Scopes",
       exact: false,
-      component: <Scopes symbolTable={symbolTable} setActiveElement={setActiveElement}/>,
+      component: <Scopes
+        symbolTable={symbolTable}
+        setActiveElement={setActiveElement}
+        assert={assert}/>,
       icon: <ValueIcon />,
     },
   ];
+
+  // -------------------------------------------
+  // State Selected TabPanel
+  // -------------------------------------------
+
+  const [active_panel, setActivePanel] =
+    useState<TabsValue>(views[0].name);
 
   const TabPanels = () => {
     return (
@@ -107,7 +114,7 @@ function App() {
 
   const TabArea = () => {
     return (
-      <Tabs defaultValue={views[0].name}>
+      <Tabs value={active_panel}  onTabChange={setActivePanel}>
         <TabSelectors />
         <TabPanels />
       </Tabs>
@@ -140,6 +147,7 @@ function App() {
         theme={{ colorScheme, fontFamily: "Arial" }}
         withGlobalStyles
       >
+        <div id='alert'><Assert cond={cond} msg={msg} assert={assert} /></div>
         <div id="header" className="boxed">
           <HeaderContent />
         </div>

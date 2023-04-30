@@ -14,7 +14,7 @@ const SymbolDetails = (props: SymbolListItemParams | null) => {
     )!;
     const name = enveloping_scope.names[symbol.name_id[1]] || "<Unnamed>";
     return (
-      <div>
+      <div className="details">
         <Text className="list_item">
           {symbol.my_id} {name}
         </Text>

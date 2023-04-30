@@ -92,3 +92,7 @@ footer {
   background-color: #1A1B1E;
   font-weight: normal;
 }
+
+.details {
+  text-align: left;
+}

@@ -6,10 +6,11 @@ export interface ScopeListItemParams {
     scope: Scope
     symbolTable: SymbolTable;
     setActiveElement: React.Dispatch<React.SetStateAction<JSX.Element>>,
+    assert: React.Dispatch<React.SetStateAction<[boolean, string]>>
 }
 
 const ScopeListItem = (props: ScopeListItemParams) => {
-    const { scope, symbolTable, setActiveElement } = props;
+    const { scope, symbolTable, setActiveElement, assert } = props;
     let parent: number | null | string = scope.parent;
     if (parent === null) {
         parent = "<No parent>";
@@ -19,7 +20,7 @@ const ScopeListItem = (props: ScopeListItemParams) => {
             className="list_item"
             onClick={(event) => {
                 setActiveElement(
-                  <ScopeDetails scope={scope} symbolTable={symbolTable}/>);
+                  <ScopeDetails scope={scope} symbolTable={symbolTable} assert={assert}/>);
                 event.preventDefault();
               }}
           >{scope.my_id} parent: {parent}</Button>
