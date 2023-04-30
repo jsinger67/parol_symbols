@@ -3,12 +3,16 @@ import SymbolListItem from "./SymbolListItem";
 import { SymbolTableParams } from "./SymbolTable";
 
 export default function Symbols(props: SymbolTableParams) {
-    if (props.symbol_table.symbols.length > 0) {
-        const { symbol_table } = props;
+    if (props.symbolTable.symbols.length > 0) {
+        const { symbolTable, setActiveElement } = props;
         return (<>
             {
-                symbol_table.symbols.map((symbol) =>
-                    <SymbolListItem key={symbol.my_id} symbol={symbol} symbol_table={symbol_table}/>
+                symbolTable.symbols.map((symbol) =>
+                    <SymbolListItem
+                        key={symbol.my_id}
+                        symbol={symbol}
+                        symbolTable={symbolTable}
+                        setActiveElement={setActiveElement}/>
                 )
             }
             </>);

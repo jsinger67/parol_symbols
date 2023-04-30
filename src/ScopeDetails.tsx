@@ -3,7 +3,7 @@ import { Scope, SymbolTable } from "./SymbolTable";
 
 export interface ScopeDetailsParams {
     scope: Scope,
-    symbol_table: SymbolTable,
+    symbolTable: SymbolTable,
 }
 
 const ScopeDetails = (props: ScopeDetailsParams) => {

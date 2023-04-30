@@ -3,12 +3,16 @@ import ScopeListItem from "./ScopeListItem";
 import { SymbolTableParams } from "./SymbolTable";
 
 export default function Scopes(props: SymbolTableParams) {
-    if (props.symbol_table.symbols.length > 0) {
-        const { symbol_table } = props;
+    if (props.symbolTable.symbols.length > 0) {
+        const { symbolTable, setActiveElement } = props;
         return (<>
             {
-                symbol_table.scopes.map((scope) =>
-                    <ScopeListItem key={scope.my_id} scope={scope}/>
+                symbolTable.scopes.map((scope) =>
+                    <ScopeListItem
+                        key={scope.my_id}
+                        scope={scope}
+                        symbolTable={symbolTable}
+                        setActiveElement={setActiveElement}/>
                 )
             }
             </>);

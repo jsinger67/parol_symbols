@@ -2,7 +2,7 @@
 import { Button, FileButton, Text, Tabs } from "@mantine/core";
 import { MantineProvider } from "@mantine/core";
 import { RadiobuttonIcon, ValueIcon } from "@modulz/radix-icons";
-import React, { useState, createContext } from "react";
+import React, { useState } from "react";
 
 import { invoke } from "@tauri-apps/api";
 
@@ -12,8 +12,19 @@ import Details from "./Details";
 
 import "./App.css";
 import { EmptySymbolTable, SymbolTable } from "./SymbolTable";
-import SymbolDetails from "./SymbolDetails";
-import ScopeDetails from "./ScopeDetails";
+// import SymbolDetails from "./SymbolDetails";
+// import ScopeDetails from "./ScopeDetails";
+
+// const setActiveElement = (state, action) => {
+//   switch (action.type) {
+//     case 'SYMBOL':
+//       return { active_element: <SymbolDetails props = {{  symbol: action.symbol, symbolTable: action.symbolTable }}/> }
+//     case 'SCOPE':
+//       return { active_element: <ScopeDetails props = {{  scope: action.scope, symbolTable: action.symbolTable }}/> }
+//     default:
+//       throw new Error('Unknown action')
+//   }
+// }
 
 function App() {
   const colorScheme = "dark";
@@ -22,7 +33,7 @@ function App() {
   // State Symbol Table Data
   // -------------------------------------------
 
-  const [symbol_table, setSymbolTable] =
+  const [symbolTable, setSymbolTable] =
     useState<SymbolTable>(EmptySymbolTable);
 
   // -------------------------------------------
@@ -49,27 +60,23 @@ function App() {
   // -------------------------------------------
   // Context Active Element
   // -------------------------------------------
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [active_element, setActiveElement] = useState<
-    typeof SymbolDetails | typeof ScopeDetails | null
-  >(null);
-  const ActiveElementContext = createContext<
-    typeof SymbolDetails | typeof ScopeDetails | null
-  >(active_element);
+  // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [active_element, setActiveElement] =
+    useState<JSX.Element>(<Text><p>Nothing selected</p></Text>);
 
   const views = [
     {
       path: "/",
       name: "Symbols",
       exact: true,
-      component: <Symbols symbol_table={symbol_table} />,
+      component: <Symbols symbolTable={symbolTable} setActiveElement={setActiveElement}/>,
       icon: <RadiobuttonIcon />,
     },
     {
       path: "/scopes",
       name: "Scopes",
       exact: false,
-      component: <Scopes symbol_table={symbol_table} />,
+      component: <Scopes symbolTable={symbolTable} setActiveElement={setActiveElement}/>,
       icon: <ValueIcon />,
     },
   ];
@@ -128,25 +135,23 @@ function App() {
   };
 
   return (
-    <ActiveElementContext.Provider value={null}>
-      <div id="wrapper">
-        <MantineProvider
-          theme={{ colorScheme, fontFamily: "Arial" }}
-          withGlobalStyles
-        >
-          <div id="header" className="boxed">
-            <HeaderContent />
-          </div>
-          <div id="tabs" className="boxed">
-            <TabArea />
-          </div>
-          <main className="boxed">
-            <Details element={active_element}/>
-          </main>
-          <footer className="boxed">(c) 2023 - Jörg Singer</footer>
-        </MantineProvider>
-      </div>
-    </ActiveElementContext.Provider>
+    <div id="wrapper">
+      <MantineProvider
+        theme={{ colorScheme, fontFamily: "Arial" }}
+        withGlobalStyles
+      >
+        <div id="header" className="boxed">
+          <HeaderContent />
+        </div>
+        <div id="tabs" className="boxed">
+          <TabArea />
+        </div>
+        <main className="boxed">
+          <Details element={active_element}/>
+        </main>
+        <footer className="boxed">(c) 2023 - Jörg Singer</footer>
+      </MantineProvider>
+    </div>
   );
 }
 

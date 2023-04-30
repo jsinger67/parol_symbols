@@ -16,7 +16,8 @@ export interface SymbolTable {
 }
 
 export interface SymbolTableParams {
-    symbol_table: SymbolTable,
+    symbolTable: SymbolTable,
+    setActiveElement: React.Dispatch<React.SetStateAction<JSX.Element>>,
 }
 
 export const EmptySymbolTable: SymbolTable = {
