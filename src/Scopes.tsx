@@ -1,7 +1,6 @@
 import { Text } from "@mantine/core";
 import ScopeListItem from "./ScopeListItem";
 import { SymbolTableParams } from "./SymbolTable";
-import { useState } from "react";
 
 export default function Scopes(props: SymbolTableParams) {
   if (props.symbolTable.symbols.length > 0) {
