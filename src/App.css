@@ -27,6 +27,7 @@
 body {
   background-color: #030F1F;
   color: azure;
+  overflow: auto;
 }
 
 div#wrapper {
@@ -57,15 +58,19 @@ div#chosen_file {
   margin-right: 10px;
 }
 
+/* div#panels {
+  overflow: auto;
+} */
+
 div#tabs {
   float: left;
   width: 33%;
   padding: 10px;
   text-align: left;
+  /* overflow: auto; */
 }
 
 main {
-  margin: 0px;
   margin-left: 33%;
   padding: 10px;
 }
@@ -95,4 +100,26 @@ footer {
 
 .details {
   text-align: left;
+  overflow: auto;
+}
+
+/* .mantine-Tabs-panel {
+  overflow: auto;
+  scroll-behavior: smooth;
+} */
+
+/* .mantine-Tabs-panel::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.mantine-Tabs-panel::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.mantine-Tabs-panel::-webkit-scrollbar-thumb:hover {
+  background: #555;
+} */
+
+.mantine-UnstyledButton-root .active {
+  background: #0734F1;
 }

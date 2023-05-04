@@ -23,13 +23,11 @@ function App() {
 
   const [[cond, msg], assert] = useState<[boolean, string]>([true, ""]);
 
-
   // -------------------------------------------
   // State Symbol Table Data
   // -------------------------------------------
 
-  const [symbolTable, setSymbolTable] =
-    useState<SymbolTable>(EmptySymbolTable);
+  const [symbolTable, setSymbolTable] = useState<SymbolTable>(EmptySymbolTable);
 
   // -------------------------------------------
   // State Grammar File
@@ -55,28 +53,47 @@ function App() {
   // -------------------------------------------
   // Context Active Element
   // -------------------------------------------
-  const [active_element, setActiveElement] =
-    useState<JSX.Element>(<Text><p>Nothing selected</p></Text>);
+  const [active_element, setActiveElement] = useState<JSX.Element>(
+    <Text>
+      <p>Nothing selected</p>
+    </Text>
+  );
+
+  // -------------------------------------------
+  // Context Active List Element
+  // -------------------------------------------
+  const [activeListElement, setActiveListElement] = useState<number>(-1);
+
 
   const views = [
     {
       path: "/",
       name: "Symbols",
       exact: true,
-      component: <Symbols
-        symbolTable={symbolTable}
-        setActiveElement={setActiveElement}
-        assert={assert}/>,
+      component: (
+        <Symbols
+          symbolTable={symbolTable}
+          setActiveElement={setActiveElement}
+          setActiveListElement={setActiveListElement}
+          activeListElement={activeListElement}
+          assert={assert}
+        />
+      ),
       icon: <RadiobuttonIcon />,
     },
     {
       path: "/scopes",
       name: "Scopes",
       exact: false,
-      component: <Scopes
-        symbolTable={symbolTable}
-        setActiveElement={setActiveElement}
-        assert={assert}/>,
+      component: (
+        <Scopes
+          symbolTable={symbolTable}
+          setActiveElement={setActiveElement}
+          setActiveListElement={setActiveListElement}
+          activeListElement={activeListElement}
+          assert={assert}
+        />
+      ),
       icon: <ValueIcon />,
     },
   ];
@@ -85,36 +102,42 @@ function App() {
   // State Selected TabPanel
   // -------------------------------------------
 
-  const [active_panel, setActivePanel] =
-    useState<TabsValue>(views[0].name);
+  const [active_panel, setActivePanel] = useState<TabsValue>(views[0].name);
 
   const TabPanels = () => {
     return (
-      <>
+      <div id="panels">
         {views.map((view) => (
-          <Tabs.Panel key={view.name} value={view.name}>
-            {view.component}
-          </Tabs.Panel>
+            <Tabs.Panel key={view.name} value={view.name}>
+              {view.component}
+            </Tabs.Panel>
         ))}
-      </>
+      </div>
     );
   };
 
   const TabSelectors = () => {
     return (
       <Tabs.List position="left">
-        {views.map((view, index) => (
-          <Tabs.Tab key={view.name} value={view.name} icon={view.icon}>
-            {view.name}
-          </Tabs.Tab>
-        ))}
+        {
+          views.map((view, index) => 
+            <Tabs.Tab
+              key={view.name}
+              value={view.name}
+              icon={view.icon}
+              onClick={() => setActiveListElement(-1)}
+              sx={{ overflow_y: "scroll" }}
+            >
+              {view.name}
+            </Tabs.Tab>)
+        }
       </Tabs.List>
     );
   };
 
   const TabArea = () => {
     return (
-      <Tabs value={active_panel}  onTabChange={setActivePanel}>
+      <Tabs value={active_panel} onTabChange={setActivePanel}>
         <TabSelectors />
         <TabPanels />
       </Tabs>
@@ -147,7 +170,9 @@ function App() {
         theme={{ colorScheme, fontFamily: "Arial" }}
         withGlobalStyles
       >
-        <div id='alert'><Assert cond={cond} msg={msg} assert={assert} /></div>
+        <div id="alert">
+          <Assert cond={cond} msg={msg} assert={assert} />
+        </div>
         <div id="header" className="boxed">
           <HeaderContent />
         </div>
@@ -155,7 +180,7 @@ function App() {
           <TabArea />
         </div>
         <main className="boxed">
-          <Details element={active_element}/>
+          <Details element={active_element} />
         </main>
         <footer className="boxed">(c) 2023 - Jörg Singer</footer>
       </MantineProvider>
