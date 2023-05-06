@@ -108,7 +108,11 @@ function App() {
     return (
       <div id="panels">
         {views.map((view) => (
-            <Tabs.Panel key={view.name} value={view.name}>
+            <Tabs.Panel
+              key={view.name}
+              value={view.name}
+              sx={{ overflow_y: "scroll" }}
+            >
               {view.component}
             </Tabs.Panel>
         ))}
@@ -126,7 +130,6 @@ function App() {
               value={view.name}
               icon={view.icon}
               onClick={() => setActiveListElement(-1)}
-              sx={{ overflow_y: "scroll" }}
             >
               {view.name}
             </Tabs.Tab>)
@@ -189,3 +192,7 @@ function App() {
 }
 
 export default App;
+function max(num1: number, num2: number): number {
+  return num1 > num2 ? num1 : num2;
+}
+

@@ -1,6 +1,18 @@
+export interface Type {
+}
+
+export interface Instance {
+    scope: number,
+    type_id: number,
+    used: boolean,
+    sem: string,
+    description: string,
+}
+
 export interface Symbol {
     my_id: number,
     name_id: number[],
+    kind: any,
 }
 
 export interface Scope {

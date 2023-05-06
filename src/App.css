@@ -27,7 +27,7 @@
 body {
   background-color: #030F1F;
   color: azure;
-  overflow: auto;
+  overflow: hidden;
 }
 
 div#wrapper {
@@ -58,9 +58,10 @@ div#chosen_file {
   margin-right: 10px;
 }
 
-/* div#panels {
-  overflow: auto;
-} */
+div#panels {
+  overflow-y: auto;
+  height: 80cqh;
+}
 
 div#tabs {
   float: left;
@@ -100,7 +101,7 @@ footer {
 
 .details {
   text-align: left;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 /* .mantine-Tabs-panel {
@@ -122,4 +123,12 @@ footer {
 
 .mantine-UnstyledButton-root .active {
   background: #0734F1;
+}
+
+.mantine-Grid-root {
+  overflow-y: auto;
+}
+
+.mantine-Tabs-panel {
+  overflow-y: auto;
 }

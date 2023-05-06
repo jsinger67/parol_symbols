@@ -12,9 +12,6 @@ export interface ScopeListItemParams {
 
 const ScopeListItem = (props: ScopeListItemParams) => {
     const { activeElement, scope, symbolTable, setActiveElement, assert } = props;
-    if (activeElement !== -1) {
-        console.log(`ScopeListItem: active element is ${activeElement}`);
-    }
     let parent: number | null | string = scope.parent;
     if (parent === null) {
         parent = "<No parent>";
