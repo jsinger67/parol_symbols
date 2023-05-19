@@ -1,6 +1,7 @@
 import { Button } from "@mantine/core";
-import { Symbol, SymbolTable } from "./SymbolTable";
 import SymbolDetails from "./SymbolDetails";
+import { SymbolTable } from "./bindings/SymbolTable";
+import { Symbol } from "./bindings/Symbol"
 
 export interface SymbolListItemParams {
   activeElement: number,

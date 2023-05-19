@@ -1,6 +1,6 @@
 import { Text } from "@mantine/core";
 import ScopeListItem from "./ScopeListItem";
-import { SymbolTableParams } from "./SymbolTable";
+import { SymbolTableParams } from "./SymbolTableParams";
 
 export default function Scopes(props: SymbolTableParams) {
   if (props.symbolTable.symbols.length > 0) {
@@ -9,7 +9,7 @@ export default function Scopes(props: SymbolTableParams) {
       setActiveElement,
       setActiveListElement,
       activeListElement,
-      assert,
+      // assert,
     } = props;
     console.log(`Scopes: active element is ${activeListElement}`);
     return (
@@ -34,7 +34,7 @@ export default function Scopes(props: SymbolTableParams) {
               scope={scope}
               symbolTable={symbolTable}
               setActiveElement={setThisElementActive}
-              assert={assert}
+              // assert={assert}
               activeElement={activeListElement}
             />
           );

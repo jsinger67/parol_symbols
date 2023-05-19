@@ -1,6 +1,6 @@
 import { Text } from "@mantine/core";
 import SymbolListItem from "./SymbolListItem";
-import { SymbolTableParams } from "./SymbolTable";
+import { SymbolTableParams } from "./SymbolTableParams";
 
 export default function Symbols(props: SymbolTableParams) {
   if (props.symbolTable.symbols.length > 0) {

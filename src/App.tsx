@@ -11,8 +11,9 @@ import Scopes from "./Scopes";
 import Details from "./Details";
 
 import "./App.css";
-import { EmptySymbolTable, SymbolTable } from "./SymbolTable";
+import { SymbolTable } from "./bindings/SymbolTable";
 import { Assert } from "./Assert";
+import { EmptySymbolTable } from "./SymbolTableParams";
 
 function App() {
   const colorScheme = "dark";
@@ -76,7 +77,7 @@ function App() {
           setActiveElement={setActiveElement}
           setActiveListElement={setActiveListElement}
           activeListElement={activeListElement}
-          assert={assert}
+          // assert={assert}
         />
       ),
       icon: <RadiobuttonIcon />,
@@ -91,7 +92,7 @@ function App() {
           setActiveElement={setActiveElement}
           setActiveListElement={setActiveListElement}
           activeListElement={activeListElement}
-          assert={assert}
+          // assert={assert}
         />
       ),
       icon: <ValueIcon />,

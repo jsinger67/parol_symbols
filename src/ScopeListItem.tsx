@@ -1,18 +1,19 @@
 import { Button } from "@mantine/core";
-import { Scope, SymbolTable } from "./SymbolTable";
+import { SymbolTable } from "./bindings/SymbolTable";
+import { Scope } from "./bindings/Scope"
 import ScopeDetails from "./ScopeDetails";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 export interface ScopeListItemParams {
     activeElement: number,
     scope: Scope
     symbolTable: SymbolTable;
     setActiveElement: React.Dispatch<React.SetStateAction<JSX.Element>>,
-    assert: React.Dispatch<React.SetStateAction<[boolean, string]>>
+    // assert: React.Dispatch<React.SetStateAction<[boolean, string]>>
 }
 
 const ScopeListItem = (props: ScopeListItemParams) => {
-    const { activeElement, scope, symbolTable, setActiveElement, assert } = props;
+    const { activeElement, scope, symbolTable, setActiveElement } = props;
 
     const myRef = useRef<HTMLButtonElement>(null);
     // const [myRef, setRef] = useState<any | null>(null);
@@ -44,7 +45,7 @@ const ScopeListItem = (props: ScopeListItemParams) => {
             onClick={(event) => {
                 myRef.current?.focus();
                 setActiveElement(
-                  <ScopeDetails scope={scope} symbolTable={symbolTable} assert={assert}/>);
+                  <ScopeDetails scope={scope} symbolTable={symbolTable}/>);
                 event.preventDefault();
                 // executeScroll();
               }}
