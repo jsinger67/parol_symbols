@@ -101,7 +101,9 @@ footer {
 
 .details {
   text-align: left;
-  /* overflow: auto; */
+  height: 85cqh;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 /* .mantine-Tabs-panel {
@@ -127,6 +129,7 @@ footer {
 
 .mantine-Grid-root {
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .mantine-Tabs-panel {

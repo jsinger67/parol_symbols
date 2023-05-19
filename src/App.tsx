@@ -51,7 +51,7 @@ function App() {
   };
 
   // -------------------------------------------
-  // Context Active Element
+  // State Active Element
   // -------------------------------------------
   const [active_element, setActiveElement] = useState<JSX.Element>(
     <Text>
@@ -60,7 +60,7 @@ function App() {
   );
 
   // -------------------------------------------
-  // Context Active List Element
+  // State Active List Element
   // -------------------------------------------
   const [activeListElement, setActiveListElement] = useState<number>(-1);
 
