@@ -25,7 +25,7 @@ const getScopeByID = (scope_id: ScopeId, symbolTable: SymbolTable): Scope => {
   return scope;
 }
 
-const getSymbolName = (symbol: Symbol, symbolTable: SymbolTable): string => {
+export const getSymbolName = (symbol: Symbol, symbolTable: SymbolTable): string => {
   const enveloping_scope = getScopeByID(symbol.name_id[0], symbolTable);
   return enveloping_scope.names[symbol.name_id[1]] || "<Unnamed>";
 };
